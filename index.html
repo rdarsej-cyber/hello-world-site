@@ -3,197 +3,129 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>// AI.benefits</title>
+  <title>// AI.academy</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #05060a;
-      --fg: #e6e8ef;
-      --muted: #6b7280;
-      --accent: #00ffa3;
-      --accent-2: #4f8cff;
-      --line: rgba(255,255,255,0.06);
-    }
-    * { box-sizing: border-box; }
-    html, body {
-      margin: 0;
-      min-height: 100%;
-      background: var(--bg);
-      color: var(--fg);
-      font-family: 'Space Grotesk', -apple-system, sans-serif;
-      overflow-x: hidden;
-    }
-    /* animated grid background */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image:
-        linear-gradient(var(--line) 1px, transparent 1px),
-        linear-gradient(90deg, var(--line) 1px, transparent 1px);
-      background-size: 48px 48px;
-      mask-image: radial-gradient(ellipse at 50% 30%, black 30%, transparent 80%);
-      pointer-events: none;
-      z-index: 0;
-    }
-    /* glow blobs */
-    body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background:
-        radial-gradient(600px circle at 20% 20%, rgba(0,255,163,0.08), transparent 60%),
-        radial-gradient(700px circle at 80% 70%, rgba(79,140,255,0.10), transparent 60%);
-      pointer-events: none;
-      z-index: 0;
-    }
-    main {
-      position: relative;
-      z-index: 1;
-      max-width: 880px;
-      margin: 0 auto;
-      padding: 5rem 1.5rem 4rem;
-    }
-    .meta {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.78rem;
-      color: var(--muted);
-      letter-spacing: 0.05em;
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      margin-bottom: 1.5rem;
-    }
-    .meta .dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 0 12px var(--accent);
-      animation: pulse 1.6s ease-in-out infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(0.85); }
-    }
-    h1 {
-      font-size: clamp(2.5rem, 7vw, 4.5rem);
-      font-weight: 700;
-      letter-spacing: -0.04em;
-      line-height: 1;
-      margin: 0 0 1rem;
-    }
-    h1 .grad {
-      background: linear-gradient(120deg, var(--accent) 0%, var(--accent-2) 60%, #c084fc 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-    .lede {
-      color: var(--muted);
-      font-size: 1.05rem;
-      max-width: 560px;
-      line-height: 1.6;
-      margin: 0 0 3rem;
-      font-family: 'JetBrains Mono', monospace;
-    }
-    .lede::before { content: '> '; color: var(--accent); }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1px;
-      background: var(--line);
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      overflow: hidden;
-      backdrop-filter: blur(10px);
-    }
-    .card {
-      background: rgba(10, 12, 18, 0.6);
-      padding: 1.5rem 1.4rem;
-      transition: background 0.25s ease;
-      position: relative;
-    }
-    .card:hover { background: rgba(20, 24, 36, 0.8); }
-    .card .num {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.72rem;
-      color: var(--accent);
-      letter-spacing: 0.1em;
-      margin-bottom: 0.8rem;
-    }
-    .card h3 {
-      font-size: 1.05rem;
-      font-weight: 600;
-      margin: 0 0 0.4rem;
-      letter-spacing: -0.01em;
-    }
-    .card p {
-      color: var(--muted);
-      font-size: 0.9rem;
-      line-height: 1.55;
-      margin: 0;
-    }
-    footer {
-      margin-top: 3rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid var(--line);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.75rem;
-      color: var(--muted);
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-    footer span.ok { color: var(--accent); }
-  </style>
+  <link rel="stylesheet" href="/assets/styles.css">
 </head>
 <body>
+  <nav class="top" id="nav"></nav>
+
   <main>
     <div class="meta"><span class="dot"></span> SYSTEM // ONLINE</div>
-    <h1>Why <span class="grad">AI</span> is good<br/>for humans.</h1>
-    <p class="lede">A short signal on the upside — automation, augmentation, and access at scale.</p>
+    <h1>Learn <span class="grad">AI</span>,<br/>one short course at a time.</h1>
+    <p class="lede">Sign up to unlock the full course catalog. Free during beta.</p>
 
-    <section class="grid">
-      <article class="card">
-        <div class="num">[ 01 ]</div>
-        <h3>Time reclaimed</h3>
-        <p>Automates repetitive work so humans can focus on what actually matters.</p>
-      </article>
-      <article class="card">
-        <div class="num">[ 02 ]</div>
-        <h3>Better signal</h3>
-        <p>Surfaces patterns in data at a scale and speed humans can't match alone.</p>
-      </article>
-      <article class="card">
-        <div class="num">[ 03 ]</div>
-        <h3>Accessibility</h3>
-        <p>Real-time translation, captions, and assistive tools for everyone.</p>
-      </article>
-      <article class="card">
-        <div class="num">[ 04 ]</div>
-        <h3>Healthcare</h3>
-        <p>Faster diagnoses, drug discovery, and personalized treatment.</p>
-      </article>
-      <article class="card">
-        <div class="num">[ 05 ]</div>
-        <h3>Education</h3>
-        <p>Personalized tutoring available at any hour, in any language.</p>
-      </article>
-      <article class="card">
-        <div class="num">[ 06 ]</div>
-        <h3>Augmentation</h3>
-        <p>A copilot, not a replacement — amplifies what people already do well.</p>
-      </article>
-    </section>
+    <div class="row">
+      <section>
+        <div class="grid" style="margin-bottom: 1rem;">
+          <div class="card">
+            <div class="num">[ 01 ]</div>
+            <h3>Time reclaimed</h3>
+            <p>Automate the repetitive so you can focus on what matters.</p>
+          </div>
+          <div class="card">
+            <div class="num">[ 02 ]</div>
+            <h3>Better signal</h3>
+            <p>Surface patterns in data at superhuman scale and speed.</p>
+          </div>
+          <div class="card">
+            <div class="num">[ 03 ]</div>
+            <h3>Augmentation</h3>
+            <p>A copilot, not a replacement — amplify what you already do.</p>
+          </div>
+          <div class="card">
+            <div class="num">[ 04 ]</div>
+            <h3>Accessibility</h3>
+            <p>Translation, captions, and assistive tools for everyone.</p>
+          </div>
+        </div>
+      </section>
 
-    <footer>
+      <aside class="panel" id="auth">
+        <h2>Get started</h2>
+        <div class="tabs" role="tablist">
+          <button class="tab active" data-tab="signin" type="button">SIGN IN</button>
+          <button class="tab" data-tab="signup" type="button">SIGN UP</button>
+        </div>
+        <form class="auth" id="auth-form" autocomplete="on">
+          <label for="email">EMAIL</label>
+          <input id="email" name="email" type="email" required autocomplete="email" placeholder="you@example.com" />
+          <label for="password">PASSWORD</label>
+          <input id="password" name="password" type="password" required autocomplete="current-password" minlength="6" placeholder="at least 6 characters" />
+          <button class="primary" type="submit" id="submit-btn">Sign in →</button>
+          <div class="msg" id="auth-msg" hidden></div>
+        </form>
+      </aside>
+    </div>
+
+    <footer class="foot">
       <span>build: <span class="ok">stable</span></span>
+      <span>auth + data via supabase</span>
       <span>deployed on vercel</span>
     </footer>
   </main>
+
+  <script type="module">
+    import { supabase, getSession, renderNav } from '/assets/supabase.js';
+
+    const session = await getSession();
+    renderNav('nav', session);
+    if (session) {
+      window.location.replace('/courses.html');
+    }
+
+    const tabs = document.querySelectorAll('.tab');
+    const form = document.getElementById('auth-form');
+    const submitBtn = document.getElementById('submit-btn');
+    const passwordInput = document.getElementById('password');
+    const msg = document.getElementById('auth-msg');
+    let mode = 'signin';
+
+    function setMode(next) {
+      mode = next;
+      tabs.forEach(t => t.classList.toggle('active', t.dataset.tab === mode));
+      submitBtn.textContent = mode === 'signin' ? 'Sign in →' : 'Create account →';
+      passwordInput.autocomplete = mode === 'signin' ? 'current-password' : 'new-password';
+      hideMsg();
+    }
+    tabs.forEach(t => t.addEventListener('click', () => setMode(t.dataset.tab)));
+
+    function showMsg(text, kind) {
+      msg.textContent = text;
+      msg.className = 'msg ' + kind;
+      msg.hidden = false;
+    }
+    function hideMsg() { msg.hidden = true; }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      submitBtn.disabled = true;
+      hideMsg();
+      const email = form.email.value.trim();
+      const password = form.password.value;
+      try {
+        if (mode === 'signin') {
+          const { error } = await supabase.auth.signInWithPassword({ email, password });
+          if (error) throw error;
+          window.location.replace('/courses.html');
+        } else {
+          const { data, error } = await supabase.auth.signUp({ email, password });
+          if (error) throw error;
+          if (data.session) {
+            window.location.replace('/courses.html');
+          } else {
+            showMsg('Check your email to confirm your account, then come back and sign in.', 'success');
+            setMode('signin');
+          }
+        }
+      } catch (err) {
+        showMsg(err.message || 'Something went wrong.', 'error');
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+  </script>
 </body>
 </html>

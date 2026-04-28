@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Courses // AI.academy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+  <nav class="top" id="nav"></nav>
+
+  <main>
+    <div class="meta"><span class="dot"></span> CATALOG // AUTHENTICATED</div>
+    <h1>Your <span class="grad">courses</span>.</h1>
+    <p class="lede">Pick one and dive in. New courses ship every week.</p>
+
+    <section class="grid" id="course-grid">
+      <div class="card empty" style="grid-column: 1 / -1;">Loading courses…</div>
+    </section>
+
+    <footer class="foot">
+      <span>build: <span class="ok">stable</span></span>
+      <span>data via supabase RLS</span>
+      <span>deployed on vercel</span>
+    </footer>
+  </main>
+
+  <script type="module">
+    import { supabase, requireAuth, renderNav, escapeHtml } from '/assets/supabase.js';
+
+    const session = await requireAuth();
+    if (!session) { /* redirected */ } else {
+      renderNav('nav', session);
+
+      const grid = document.getElementById('course-grid');
+      const { data: courses, error } = await supabase
+        .from('courses')
+        .select('slug, title, description, level, duration_minutes')
+        .order('created_at', { ascending: true });
+
+      if (error) {
+        grid.innerHTML = `<div class="card empty" style="grid-column: 1 / -1; color: var(--error);">Failed to load courses: ${escapeHtml(error.message)}</div>`;
+      } else if (!courses || courses.length === 0) {
+        grid.innerHTML = `<div class="card empty" style="grid-column: 1 / -1;">No courses yet. Check back soon.</div>`;
+      } else {
+        grid.innerHTML = courses.map((c, i) => `
+          <a class="card" href="/course.html?slug=${encodeURIComponent(c.slug)}">
+            <div class="num">[ ${String(i + 1).padStart(2, '0')} ]</div>
+            <h3>${escapeHtml(c.title)}</h3>
+            <p>${escapeHtml(c.description)}</p>
+            <div class="meta-row">
+              <span class="level">${escapeHtml(c.level)}</span>
+              <span>${c.duration_minutes} min</span>
+            </div>
+          </a>
+        `).join('');
+      }
+    }
+  </script>
+</body>
+</html>

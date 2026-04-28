@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Course // AI.academy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+  <nav class="top" id="nav"></nav>
+
+  <main>
+    <a class="back" href="/courses.html">← back to catalog</a>
+    <div id="course-root">
+      <div class="empty">Loading…</div>
+    </div>
+
+    <footer class="foot">
+      <span>build: <span class="ok">stable</span></span>
+      <span>data via supabase RLS</span>
+      <span>deployed on vercel</span>
+    </footer>
+  </main>
+
+  <script type="module">
+    import { supabase, requireAuth, renderNav, escapeHtml } from '/assets/supabase.js';
+
+    const session = await requireAuth();
+    if (session) {
+      renderNav('nav', session);
+
+      const slug = new URLSearchParams(location.search).get('slug');
+      const root = document.getElementById('course-root');
+
+      if (!slug) {
+        root.innerHTML = `<div class="empty" style="color: var(--error);">No course specified.</div>`;
+      } else {
+        const { data: course, error } = await supabase
+          .from('courses')
+          .select('title, description, level, duration_minutes, content')
+          .eq('slug', slug)
+          .maybeSingle();
+
+        if (error) {
+          root.innerHTML = `<div class="empty" style="color: var(--error);">Failed to load course: ${escapeHtml(error.message)}</div>`;
+        } else if (!course) {
+          root.innerHTML = `<div class="empty">Course not found.</div>`;
+        } else {
+          document.title = `${course.title} // AI.academy`;
+          root.innerHTML = `
+            <div class="meta"><span class="dot"></span> COURSE // ENROLLED</div>
+            <h1>${escapeHtml(course.title)}</h1>
+            <p class="lede">${escapeHtml(course.description)}</p>
+            <div class="detail-meta">
+              <span class="level">${escapeHtml(course.level)}</span>
+              <span>${course.duration_minutes} min</span>
+            </div>
+            <article class="detail-content">${escapeHtml(course.content)}</article>
+          `;
+        }
+      }
+    }
+  </script>
+</body>
+</html>
